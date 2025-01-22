@@ -19,7 +19,7 @@ console.log('Unpacking');
 /* Console Log 3 Artists */
 console.log('Hayao Miyazaki - Japanese animator, filmmaker, and manga artist. He co-founded Studio Ghibli');
 console.log('Chappell Roan - American singer-songwriter known for her upbeat, femme-positive pop music who is rewriting the standards of celebrity culture');
-console.log('');
+console.log('Kel Lauren is a Graphic Designer in Portland, OR, specializing in merchandise design and music branding.They are reworking the space of music design that is male dominated, unethically produced, and non-exlcusive');
 
 /* Console Prompt */
 var name = promt('what is your name?');
