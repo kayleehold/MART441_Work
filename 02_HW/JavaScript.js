@@ -22,5 +22,6 @@ console.log('Chappell Roan - American singer-songwriter known for her upbeat, fe
 console.log('Kel Lauren is a Graphic Designer in Portland, OR, specializing in merchandise design and music branding.They are reworking the space of music design that is male dominated, unethically produced, and non-exlcusive');
 
 /* Console Prompt */
-var name = promt('what is your name?');
-console.log('hello' + name);
+
+var game = prompt('What is your favorite game?');
+console.log( game + ' is a good game!');
