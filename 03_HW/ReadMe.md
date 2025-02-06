@@ -1,5 +1,17 @@
-Due the ethics of AI i will not be using it.
+Instead of doing AI I did research on the orgin of "Choose Your Own Adventure" Games. It was so interesting to see the gaming world drawing from literature.
 
-This week was a good challenge. I feel as though I did not create my project in the most efficient way but in a way that made the most sense for me to accomplish the assignment.
+They originated from, Choose Your Own Adventure® gamebooks in 1979 but it they became super popular between 1979-1999, the series sold over 250 million copies worldwide and was translated into 38 languages.
 
-I am happy about the store and was able to figure out almost all of the code by myself.
+he Choose Your Own Adventure gamebooks are credited with the heightened popularity of Role Playing Games, including Dungeons and Dragons. Mass Effect II also credits the Choose Your Own Adventure series as an inspiration in its narrative-based adaptive difficulty settings.
+
+I never thought of their orgin so this was actually interesting to read about!
+
+Here are the sources I read if interested:
+
+https://www.cyoa.com/pages/history-of-cyoa?srsltid=AfmBOopEg2mne6VlIlzOS3MnbI2WwejcZGLGeUGrfkmuHXilx8b4lNoW
+
+https://www.smithsonianmag.com/innovation/surprisingly-long-history-of-choose-your-own-adventure-stories-180980014/
+
+https://bookriot.com/history-of-choose-your-own-adventure-books/
+
+
