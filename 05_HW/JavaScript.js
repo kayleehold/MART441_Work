@@ -1,5 +1,5 @@
 // create an array of image names that correspond to the image tags
-var imageTags = ["image1", "image2", "image3", "image4","image5","image6"];
+var imageTags = ["image1", "image2", "image3", "image4","image5","image6","image7","image8","image9","image10","image11","image12"];
 // create a variable with the blank image name
 var blankImagePath = "images/titleimage.jpg";
 // create a empty array for the actual images
@@ -23,9 +23,9 @@ function printBlanks()
 function createRandomImageArray()
 {
     // create an array of actual images
-    var actualImagePath = ["images/bear.jpg", "images/bunny.jpg", "images/duck.jpg", "images/kirby.jpg", "images/.jpg", "images/bunny.jpg"];
+    var actualImagePath = ["images/bear.jpg", "images/bunny.jpg", "images/duck.jpg", "images/kirby.jpg", "images/penguin.jpg", "images/snoopy.jpg"];
     // create another array to make sure the images only get added twice
-    var count = [0,0];
+    var count = [0,0,0,0,0,0];
     // create a while statement to check to see if our actual image array is full
     while(actualImages.length < 12)
     {
