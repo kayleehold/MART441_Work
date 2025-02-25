@@ -6,16 +6,19 @@ class ViewFinder
 {
     // the constructor requires only one title, the description, imagePath, etc.
     // we will create multiple objects from this class
-    constructor(title)
+    constructor(title, description, author, year)
     {
         this.title = title;
+        this.description = description;
+        this.author = author;
+        this.year = year;
     }
 
     // this just returns the title concatenated with the string "Title"
     // keep in mind only one return statement can exist in a function
     toString()
     {
-        return "Title: " + this.title;    
+        return "Title: " + this.title + "\n Description" + this.description + "\n Author"   
     }
 
     // this is the property theTitle which returns the title as well only the title
@@ -31,7 +34,7 @@ class ViewFinder
 function initializeArray()
 {
     // create the first object from the class ViewFinder
-    var myViewFinder = new ViewFinder("A really funny Pug");
+    var myViewFinder = new ViewFinder("A really funny Pug", "A Protest");
     // create a second object from the class ViewFinder
     var myViewFinder1 = new ViewFinder("A really angry tiger");
     // add the first object to the array

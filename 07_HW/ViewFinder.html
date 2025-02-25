@@ -10,8 +10,8 @@
     <meta name="author" content="kaylee beck">
     <meta name="keywords" content="Web Design, HTML">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>End Score</title>
-    <script type = "text/javascript" src="JavaScript.js"></script>
+    <title>Kaylee Beck - HW7</title>
+    <script type = "text/javascript" src="Main_JavaScript.js"></script>
 
 </head>
 
@@ -24,31 +24,16 @@ body {
 
     text-align: center;
     font-family: 'Cambria';
-    color: rgb(170, 83, 134);
+    color: rgb(41, 26, 35);
     
 }
 
-.header {
-    padding: 60px;
-    text-align: center;
-    background: rgb(170, 83, 134);
-    color: #f8f4ee;
-    font-size: 50px;
-}
 
 </style>
 
-<body onload="playerInfo();">
-<h1 class="header">Memory Game</h1>
-
-
-<div class="divTable">
-    <div class="divTableBody">
-        <div class="divTableRow">
-            <div class="divTableCell"><div id="endInformation"></div></div>
-        </div>
-        
-    </div>
-
+<body onload="initializeArray();">
+    <div id="title"></div>
+    <button id="btnSubmit" onclick="accessInformation();">View More</button>
 </body>
+
     </html>
