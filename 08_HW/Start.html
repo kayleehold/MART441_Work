@@ -1,0 +1,74 @@
+<html lang="en-US">
+
+<html>
+<head>
+    <link rel="stylesheet" href="CSS.css">
+
+
+
+    <meta charset="UTF-8">
+    <meta name="author" content="kaylee beck">
+    <meta name="keywords" content="Web Design, HTML">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start</title>
+    <script type = "text/javascript" src="JavaScript.js"></script>
+
+</head>
+
+<style>
+body {
+    background-color: #f8f4ee;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    text-align: center;
+    font-family: 'Cambria';
+    color: rgb(170, 83, 134);
+    
+}
+
+.header {
+    padding: 60px;
+    text-align: center;
+    background: rgb(170, 83, 134);
+    color: #f8f4ee;
+    font-size: 50px;
+}
+
+</style>
+
+<script> //Go to next Page
+    function goNextPage()
+            {
+                window.location = "Game.html";
+            }
+</script>
+
+<body onload="printBlanks();">
+<h1 class="header">Memory Game</h1>
+
+
+<div class="divTable">
+    <div class="divTableBody">
+        <div class="divTableRow">
+            <div class="divTableCell">First Name</div>
+            <div class="divTableCell"><input type="text" id="txtFirstName"></div>
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell">Last Name</div>
+            <div class="divTableCell"><input type="text" id="txtLastName"></div>
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell">Age</div>
+            <div class="divTableCell"><input type="text" id="txtAge"></div>
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell"><button id="btnSubmit" onclick="goNextPage(); addToPlayer();">Submit</button></div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+    </html>
