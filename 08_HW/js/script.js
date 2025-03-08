@@ -1,56 +1,46 @@
-var myViewFinderArray = new Array();
-
-class ViewFinder
-{
-    constructor(title, description, author, year)
-    {
-        this.title = title;
-        this.description = description;
-        this.author = author;
-        this.year = year;
+$(document).ready(function() {
+    // Select all images in the image container
+    let images = $('.image-container img');
+    let index = 0; // Track the current image index
+    
+    // Define an array of text messages to cycle through
+    let texts = ['"To lose one parent may be regarded as misfortune; to lose both looks like carelessness" - Oscar Wilde', '"Set your heart ablaze!" - Rengoku', '"Friendship is magic!!" - My Little Pony'];
+    let textIndex = 0; // Track the current text index
+    
+    // Define an array of shape colors to cycle through
+    let shapes = ["purple", "pink", "blue"];
+    let shapeIndex = 0; // Track the current shape index
+    
+    // Function to cycle through images
+    function cycleImages() {
+        $(images[index]).fadeOut(500, function() {
+            index = (index + 1) % images.length; // Move to the next image
+            $(images[index]).fadeIn(500); // Show the next image
+        });
     }
+    setInterval(cycleImages, 3000); // Change image every 3 seconds
 
-    // Printing out on page
-    toString()
-    {
-        return "Title: " + this.title + "\n Description: " + this.description + "\n Author: " + this.author + "\n Year: " + this.year 
+    // Function to cycle through text messages
+    function cycleText() {
+        let textContainer = $('.text-container');
+        textContainer.fadeOut(500, function() {
+            textIndex = (textIndex + 1) % texts.length; // Move to next text
+            textContainer.text(texts[textIndex]).fadeIn(500); // Update text
+        });
     }
-
-/*     For Images Later
-    get theTitle()
-    {
-        return this.title;
-    } */
-
-}
-
-
-// array to class to print
-function initializeArray()
-{
-   // My Variables
-    var myViewFinder = new ViewFinder("black lives matter", "99.films", "Black Lives Matter protester holding sign that reads 'racism isn't getting worse it's getting filmed'", "2020");
-    var myViewFinder1 = new ViewFinder("Heinous actions: opposition to Trump", "David McNew", "People protest against Donald Trump on 17 February in Los Angeles, California","2025");
-    var myViewFinder2 = new ViewFinder("World Violent protests in Georgia", "Jerome Gilles","Pro-European Union demonstrators hold Georgian and EU flags during a protest against the government's postponement of European Union accession talks until 2028, outside the Parliament in central Tbilisi, Georgia", "2024");
-    var myViewFinder3 = new ViewFinder("Climate protest mires flights at Germany's Frankfurt airport as police thwart linked action in London", "Arne Dedert", "Emergency vehicles airport security are seen on a taxiway at Frankfurt Airport, where two activists (M) have glued themselves to the pavement", "2024");
-    var myViewFinder4 = new ViewFinder("Men of Quality Respect Womens Equality", "Samantha Sophia", "Some candid shots from the 2017 Women’s March in Los Angeles. Powerful image of allies.", "2017");
-   
-    // Pushing Varibles
-    myViewFinderArray.push(myViewFinder);
-    myViewFinderArray.push(myViewFinder1);
-    myViewFinderArray.push(myViewFinder2);
-    myViewFinderArray.push(myViewFinder3);
-    myViewFinderArray.push(myViewFinder4);
-
-}
-
-
-function accessInformation()
-{
-    // Make random number based on Array Length to pick object from array
-    var randomNumber = Math.floor(Math.random() * myViewFinderArray.length);
-
-    // calling the toString
-    document.getElementById("title").innerHTML = myViewFinderArray[randomNumber].toString();
-
-}
+    setInterval(cycleText, 4000); // Change text every 4 seconds
+    
+    // Function to move and change the shape
+    function moveShape() {
+        let shape = $('.shape');
+        shapeIndex = (shapeIndex + 1) % shapes.length; // Move to next shape color
+        shape.css('background-color', shapes[shapeIndex]); // Change color
+        
+        // Set random position within the viewport
+        shape.animate({
+            left: Math.random() * ($(window).width() - 50) + 'px',
+            top: Math.random() * ($(window).height() - 50) + 'px'
+        }, 1000);
+    }
+    setInterval(moveShape, 2000); // Move shape every 2 seconds
+});
