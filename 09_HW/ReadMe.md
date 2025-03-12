@@ -1,8 +1,9 @@
+Wow my brain found this assignment to be such a puzzle. I was super grateful to chatgpt for helping me visualize and explain each error in the console log for me when I got lost. 
 
-This assignement was a very difficult one for me. I used ChatGPT for the first time this semester cause I was struggling so much to understand what I was doing wrong and how to do JQuery. Once I got the bases codes from ChatGPT I was able to code my own stuff and it was then really fun.
+I have been really into anime and manga since my other online class is Manga and Anime Art History. I always find the elements personal elements we get to include into of each assignemnt such a nice break from the frustration of problem solving but it also gives me easier visuals that I enjoy seeing. These elements of the homework always help me a lot.
 
-I do still morally disagree with how harmful AI can be for the environement but I do agree that it can be used for good and its a helpful tool to support people learning something new like code. I think when AI is used to support learning instead of doing the critical development and thinking for you, its a great tool.
+The JSON data I used wasn't from the list but from another GitHub file by asarode https://github.com/asarode/anime-list/blob/master/data/data.json
 
-I know I was unable to accomplish all that the assigsnment required but depside really struggling with coding and this assigenment I am proud of what I do accomplish and create.
+I foudn the "Hype" numbers in the data to be the most interesting so with chatgpt's examples I was able to create a filter using the "Hype" numbers for each data point!
 
-I had fun getting quotes and images too! I always like adding myself into the project. It allows me to take a bit of a break from the difficult problem solving coding provides during these assigenments at times.
+When I code I still feel very out of place and lost most the time. Although i ethically find Chatgpt and AI to be harmful to the environment I am havppy to use it sparingly to aid me in my learning and growth as a coder.
