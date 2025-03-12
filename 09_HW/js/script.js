@@ -1,46 +1,56 @@
 $(document).ready(function() {
-    // Select all images in the image container
-    let images = $('.image-container img');
-    let index = 0; // Track the current image index
-    
-    // Define an array of text messages to cycle through
-    let texts = ['"To lose one parent may be regarded as misfortune; to lose both looks like carelessness" - Oscar Wilde', '"Set your heart ablaze!" - Rengoku', '"Friendship is magic!!" - My Little Pony'];
-    let textIndex = 0; // Track the current text index
-    
-    // Define an array of shape colors to cycle through
-    let shapes = ["purple", "pink", "blue"];
-    let shapeIndex = 0; // Track the current shape index
-    
-    // Function to cycle through images
-    function cycleImages() {
-        $(images[index]).fadeOut(500, function() {
-            index = (index + 1) % images.length; // Move to the next image
-            $(images[index]).fadeIn(500); // Show the next image
+    // Function to load JSON and display data
+    function loadJSON() {
+        $.ajax({
+            url: './json/AnimeData.json', // Path to JSON file
+            dataType: 'json',
+            success: function(data) {
+                displayData(data);
+            },
+            error: function() {
+                alert("Error loading data.");
+            }
         });
     }
-    setInterval(cycleImages, 3000); // Change image every 3 seconds
 
-    // Function to cycle through text messages
-    function cycleText() {
-        let textContainer = $('.text-container');
-        textContainer.fadeOut(500, function() {
-            textIndex = (textIndex + 1) % texts.length; // Move to next text
-            textContainer.text(texts[textIndex]).fadeIn(500); // Update text
+    // Function to display anime data in a table
+    function displayData(data) {
+        let tableBody = $("#animeTable tbody");
+        tableBody.empty(); // Clear existing data
+
+        data.forEach(function(anime) {
+            let genres = anime.genres.length ? anime.genres.join(", ") : "N/A";
+            let row = `<tr>
+                        <td><a href="${anime.title.link}" target="_blank">${anime.title.text}</a></td>
+                        <td>${anime.studio}</td>
+                        <td>${genres}</td>
+                        <td class="hype">${anime.hype}</td>
+                        <td>${anime.start_date}</td>
+                        <td>${anime.description.substring(0, 100)}...</td>
+                    </tr>`;
+            tableBody.append(row);
         });
     }
-    setInterval(cycleText, 4000); // Change text every 4 seconds
-    
-    // Function to move and change the shape
-    function moveShape() {
-        let shape = $('.shape');
-        shapeIndex = (shapeIndex + 1) % shapes.length; // Move to next shape color
-        shape.css('background-color', shapes[shapeIndex]); // Change color
-        
-        // Set random position within the viewport
-        shape.animate({
-            left: Math.random() * ($(window).width() - 50) + 'px',
-            top: Math.random() * ($(window).height() - 50) + 'px'
-        }, 1000);
-    }
-    setInterval(moveShape, 2000); // Move shape every 2 seconds
+
+    // jQuery Plugin to highlight anime with hype above a certain value
+    $.fn.highlightHype = function(threshold) {
+        this.find("tr").each(function() {
+            let hypeValue = parseInt($(this).find(".hype").text());
+            if (hypeValue > threshold) {
+                $(this).addClass("highlight");
+            } else {
+                $(this).removeClass("highlight");
+            }
+        });
+        return this;
+    };
+
+    // Event listener for filter button
+    $("#applyFilter").click(function() {
+        let threshold = $("#hypeFilter").val();
+        $("#animeTable tbody").highlightHype(threshold);
+    });
+
+    // Load JSON on page load
+    loadJSON();
 });
