@@ -1,56 +1,107 @@
 $(document).ready(function() {
-    // Function to load JSON and display data
-    function loadJSON() {
-        $.ajax({
-            url: './json/AnimeData.json', // Path to JSON file
-            dataType: 'json',
-            success: function(data) {
-                displayData(data);
-            },
-            error: function() {
-                alert("Error loading data.");
+    // Get canvas and its context
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    
+    // Variable to control the canvas background color
+    let bgColor = "#fff";
+    
+    // CLASS FOR GAME OBJECTS
+    class GameObject {
+        constructor(x, y, size, color, speedX, speedY) {
+            // Set the properties of the object
+            this.x = x;                // X position
+            this.y = y;                // Y position
+            this.size = size;          // Size (radius for circle)
+            this.color = color;        // Object color
+            this.speedX = speedX;      // Horizontal speed
+            this.speedY = speedY;      // Vertical speed
+        }
+
+        // Method to draw the object on the canvas
+        draw() {
+            ctx.fillStyle = this.color;                 // Set fill color
+            ctx.beginPath();                            // Start drawing path
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);  // Draw circle
+            ctx.fill();                                 // Fill the circle with color
+            ctx.closePath();                            // End drawing path
+        }
+
+        // Method to move the object
+        move() {
+            this.x += this.speedX;   // Update X position
+            this.y += this.speedY;   // Update Y position
+
+            // Prevent objects from leaving the canvas by reversing speed on collision
+            if (this.x - this.size < 0 || this.x + this.size > canvas.width) {
+                this.speedX *= -1;  // Reverse X direction on canvas edge hit
             }
-        });
+            if (this.y - this.size < 0 || this.y + this.size > canvas.height) {
+                this.speedY *= -1;  // Reverse Y direction on canvas edge hit
+            }
+        }
     }
 
-    // Function to display anime data in a table
-    function displayData(data) {
-        let tableBody = $("#animeTable tbody");
-        tableBody.empty(); // Clear existing data
+    // CREATE GAME OBJECTS
+    let player = new GameObject(150, 150, 30, "#3498db", 0, 0);    // Player controlled by user
+    let enemy = new GameObject(400, 300, 40, "#e74c3c", 2, 2);     // Enemy moves autonomously
 
-        data.forEach(function(anime) {
-            let genres = anime.genres.length ? anime.genres.join(", ") : "N/A";
-            let row = `<tr>
-                        <td><a href="${anime.title.link}" target="_blank">${anime.title.text}</a></td>
-                        <td>${anime.studio}</td>
-                        <td>${genres}</td>
-                        <td class="hype">${anime.hype}</td>
-                        <td>${anime.start_date}</td>
-                        <td>${anime.description.substring(0, 100)}...</td>
-                    </tr>`;
-            tableBody.append(row);
-        });
-    }
 
-    // jQuery Plugin to highlight anime with hype above a certain value
-    $.fn.highlightHype = function(threshold) {
-        this.find("tr").each(function() {
-            let hypeValue = parseInt($(this).find(".hype").text());
-            if (hypeValue > threshold) {
-                $(this).addClass("highlight");
-            } else {
-                $(this).removeClass("highlight");
-            }
-        });
-        return this;
-    };
+    // PLAYER CONTROL WITH ARROW KEYS
+    $(document).keydown(function(e) {
+        const speed = 5;  // Movement speed for the player
 
-    // Event listener for filter button
-    $("#applyFilter").click(function() {
-        let threshold = $("#hypeFilter").val();
-        $("#animeTable tbody").highlightHype(threshold);
+        // Check which arrow key is pressed and move the player accordingly
+        switch (e.key) {
+            case "ArrowUp":    player.y -= speed; break;   // Move up
+            case "ArrowDown":  player.y += speed; break;   // Move down
+            case "ArrowLeft":  player.x -= speed; break;   // Move left
+            case "ArrowRight": player.x += speed; break;   // Move right
+        }
+        
+        // object canva border
+        player.x = Math.max(player.size, Math.min(player.x, canvas.width - player.size));
+        player.y = Math.max(player.size, Math.min(player.y, canvas.height - player.size));
     });
 
-    // Load JSON on page load
-    loadJSON();
+    // COLLISION STUFF
+    function checkCollision(obj1, obj2) {
+        const dx = obj1.x - obj2.x;                      // Difference in X positions
+        const dy = obj1.y - obj2.y;                      // Difference in Y positions
+        const distance = Math.hypot(dx, dy);             // Calculate the distance between the centers
+
+        return distance < obj1.size + obj2.size;         // True if objects overlap
+    }
+
+    // GAME LOOP
+    function gameLoop() {
+        // Clear the canvas before redrawing objects
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Move the enemy (autonomous movement)
+        enemy.move();
+
+        // Draw the player and the enemy
+        player.draw();
+        enemy.draw();
+
+        // Check for collision between player and enemy
+        if (checkCollision(player, enemy)) {
+            // Toggle the canvas background color on collision
+            bgColor = (bgColor === "#f0f0f0") ? "#ffcccb" : "#f0f0f0";
+
+            // Change the size of both objects on collision
+            player.size = (player.size > 20) ? 20 : 40;
+            enemy.size = (enemy.size > 20) ? 20 : 40;
+        }
+
+        // Apply the new background color to the canvas
+        canvas.style.background = bgColor;
+
+        // Continue the animation loop
+        requestAnimationFrame(gameLoop);
+    }
+
+    // START THE GAME LOOP
+    gameLoop();
 });

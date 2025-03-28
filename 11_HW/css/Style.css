@@ -1,25 +1,19 @@
 body {
-  background-color: #b5a6f5;
-  color: white;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-  text-align: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0;
 }
-.image-container img {
-  position: absolute;
-  width: 300px;
-  height: auto;
-  display: none;
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
 }
-.text-container {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  font-size: 2rem;
-}
-.shape {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  opacity: 0.7;
+
+canvas {
+    border: 5px solid #333;
+    background: #fff;
 }

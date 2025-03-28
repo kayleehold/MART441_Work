@@ -3,39 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaylee Beck HW9</title>
+    <title>Kaylee Beck HW11</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./js/script.js"></script>
     <style>
         body { font-family: Arial, sans-serif; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th, td { border: 1px solid #a03f3f; padding: 8px; text-align: left; }
         th { background-color: #f4f4f4; }
         .highlight { background-color: rgb(255, 255, 122); }
     </style>
 </head>
 <body>
 
-    <h2>Anime List</h2>
-    <label for="hypeFilter">Highlight anime with hype above: </label>
-    <input type="number" id="hypeFilter" value="30000">
-    <button id="applyFilter">Apply Filter</button>
+<!-- Background Music -->
+<audio id="song" src="./media/UseSomebody.mp3" controls="controls">
 
-    <table id="animeTable">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Studio</th>
-                <th>Genres</th>
-                <th>Hype</th>
-                <th>Start Date</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be populated here -->
-        </tbody>
-    </table>
+</audio>
+
+<div class="container">
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
