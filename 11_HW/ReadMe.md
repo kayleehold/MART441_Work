@@ -1,9 +1,7 @@
-Wow my brain found this assignment to be such a puzzle. I was super grateful to chatgpt for helping me visualize and explain each error in the console log for me when I got lost. 
+For this weeks assignement we didn't have the full week like usual since the assignemnet was open to us on Thursday and it is due the following Monday. I was a bit of a time crunch and cound't ask for an extension since that wouldn't have helped me much due to other homework and events taking place next week.
 
-I have been really into anime and manga since my other online class is Manga and Anime Art History. I always find the elements personal elements we get to include into of each assignemnt such a nice break from the frustration of problem solving but it also gives me easier visuals that I enjoy seeing. These elements of the homework always help me a lot.
+Because of this I feel as though I rushed the assignement and used AI to explain a lot of what was going on. Luckily I had experience with html5 from my previous creative coding classes. AI was so helpgul in breaking down and explaining thing and helping me with the math within the code.
 
-The JSON data I used wasn't from the list but from another GitHub file by asarode https://github.com/asarode/anime-list/blob/master/data/data.json
+I also had some help from someone who has experience with code to help break down more of the math and explain how I should use a class to create the code to work better.
 
-I foudn the "Hype" numbers in the data to be the most interesting so with chatgpt's examples I was able to create a filter using the "Hype" numbers for each data point!
-
-When I code I still feel very out of place and lost most the time. Although i ethically find Chatgpt and AI to be harmful to the environment I am havppy to use it sparingly to aid me in my learning and growth as a coder.
+The comments on this assignement are not all mine. I was stuggling to organize my code and feeling overwhelemed so I asked chatgpt to break the code down for me using comments and it really helped me to stay organized and focused!

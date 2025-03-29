@@ -43,8 +43,8 @@ $(document).ready(function() {
     }
 
     // CREATE GAME OBJECTS
-    let player = new GameObject(150, 150, 30, "#3498db", 0, 0);    // Player controlled by user
-    let enemy = new GameObject(400, 300, 40, "#e74c3c", 2, 2);     // Enemy moves autonomously
+    let player = new GameObject(150, 150, 30, "#dcb3fb", 0, 0);    // Player controlled by user
+    let enemy = new GameObject(400, 300, 40, "#b3d8fb", 2, 2);     // Enemy moves autonomously
 
 
     // PLAYER CONTROL WITH ARROW KEYS
