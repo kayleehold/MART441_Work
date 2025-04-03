@@ -3,30 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaylee Beck HW11</title>
+    <title>Kaylee Beck HW12</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./js/script.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 50px solid #a03f3f; padding: 8px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        .highlight { background-color: rgb(255, 255, 122); }
+        canvas {
+            border: 2px solid black;
+            background-color: lightgray;
+        }
     </style>
 </head>
+</head>
 <body>
-
-<!-- Background Music -->
-<audio id="song" src="./media/UseSomebody.mp3" controls="controls">
-
-</audio>
-
-<div class="container">
-    <canvas id="gameCanvas" width="800" height="500"></canvas>
-</div>
-
-<script src="script.js"></script>
-
+    <div id="scoreBoard">Score: <span id="score">0</span></div>
+    <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        let score = 0;
+        const scoreDisplay = document.getElementById("score");
+        
+        // Class representing general game objects
+        class GameObject {
+            constructor(x, y, width, height, color) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.color = color;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        }
+        
+        // Player class that extends GameObject
+        class Player extends GameObject {
+            constructor(x, y) {
+                super(x, y, 30, 30, "blue");
+                this.speed = 5;
+            }
+            move(dx, dy) {
+                let newX = this.x + dx;
+                let newY = this.y + dy;
+                
+                // Prevent collision with obstacles
+                if (!obstacles.some(obj => isColliding(newX, newY, this))) {
+                    this.x = newX;
+                    this.y = newY;
+                }
+                
+                // Check for collectible pickup
+                collectibles.forEach((collectible, index) => {
+                    if (isColliding(this.x, this.y, collectible)) {
+                        collectibles.splice(index, 1); // Remove collectible
+                        score++; // Increase score
+                        scoreDisplay.textContent = score; // Update score on screen
+                    }
+                });
+            }
+        }
+        
+        // Function to check collision between player and objects
+        function isColliding(x, y, obj) {
+            return x < obj.x + obj.width && x + 30 > obj.x &&
+                   y < obj.y + obj.height && y + 30 > obj.y;
+        }
+        
+        let player = new Player(50, 50);
+        let obstacles = [];
+        let collectibles = [];
+        
+        // Load obstacles from JSON file
+        fetch("obstacles.json")
+            .then(response => response.json())
+            .then(data => {
+                obstacles = data.map(obj => new GameObject(obj.x, obj.y, obj.width, obj.height, "red"));
+            });
+        
+        // Load collectibles from JSON file
+        fetch("collectibles.json")
+            .then(response => response.json())
+            .then(data => {
+                collectibles = data.map(obj => new GameObject(obj.x, obj.y, obj.width, obj.height, "gold"));
+            });
+        
+        // Listen for keyboard input to move player
+        window.addEventListener("keydown", (e) => {
+            switch (e.key) {
+                case "ArrowUp": player.move(0, -player.speed); break;
+                case "ArrowDown": player.move(0, player.speed); break;
+                case "ArrowLeft": player.move(-player.speed, 0); break;
+                case "ArrowRight": player.move(player.speed, 0); break;
+            }
+        });
+        
+        // Game loop to update and redraw the canvas
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            obstacles.forEach(obj => obj.draw());
+            collectibles.forEach(obj => obj.draw());
+            player.draw();
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+    </script>
 </body>
 </html>
+
 
