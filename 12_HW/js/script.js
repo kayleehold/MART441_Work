@@ -1,107 +1,101 @@
-$(document).ready(function() {
-    // Get canvas and its context
+$(document).ready(function () {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
-    
-    // Variable to control the canvas background color
-    let bgColor = "#fff";
-    
-    // CLASS FOR GAME OBJECTS
+    let score = 0;
+    const scoreDisplay = document.getElementById("score");
+
     class GameObject {
-        constructor(x, y, size, color, speedX, speedY) {
-            // Set the properties of the object
-            this.x = x;                // X position
-            this.y = y;                // Y position
-            this.size = size;          // Size (radius for circle)
-            this.color = color;        // Object color
-            this.speedX = speedX;      // Horizontal speed
-            this.speedY = speedY;      // Vertical speed
+        constructor(x, y, width, height, color) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.color = color;
         }
-
-        // Method to draw the object on the canvas
         draw() {
-            ctx.fillStyle = this.color;                 // Set fill color
-            ctx.beginPath();                            // Start drawing path
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);  // Draw circle
-            ctx.fill();                                 // Fill the circle with color
-            ctx.closePath();                            // End drawing path
-        }
-
-        // Method to move the object
-        move() {
-            this.x += this.speedX;   // Update X position
-            this.y += this.speedY;   // Update Y position
-
-            // Prevent objects from leaving the canvas by reversing speed on collision
-            if (this.x - this.size < 0 || this.x + this.size > canvas.width) {
-                this.speedX *= -1;  // Reverse X direction on canvas edge hit
-            }
-            if (this.y - this.size < 0 || this.y + this.size > canvas.height) {
-                this.speedY *= -1;  // Reverse Y direction on canvas edge hit
-            }
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
 
-    // CREATE GAME OBJECTS
-    let player = new GameObject(150, 150, 30, "#dcb3fb", 0, 0);    // Player controlled by user
-    let enemy = new GameObject(400, 300, 40, "#b3d8fb", 2, 2);     // Enemy moves autonomously
-
-
-    // PLAYER CONTROL WITH ARROW KEYS
-    $(document).keydown(function(e) {
-        const speed = 5;  // Movement speed for the player
-
-        // Check which arrow key is pressed and move the player accordingly
-        switch (e.key) {
-            case "ArrowUp":    player.y -= speed; break;   // Move up
-            case "ArrowDown":  player.y += speed; break;   // Move down
-            case "ArrowLeft":  player.x -= speed; break;   // Move left
-            case "ArrowRight": player.x += speed; break;   // Move right
+    class Player extends GameObject {
+        constructor(x, y) {
+            super(x, y, 30, 30, "blue");
+            this.speed = 30;
+        }
+        move(dx, dy) {
+            let newX = this.x + dx;
+            let newY = this.y + dy;
+        
+            // Check both horizontal and vertical movement separately to prevent getting stuck
+            if (!obstacles.some(obj => isColliding(newX, this.y, obj))) {
+                this.x = newX;
+            }
+            if (!obstacles.some(obj => isColliding(this.x, newY, obj))) {
+                this.y = newY;
+            }
+        
+            // Check for collectible pickup
+            collectibles.forEach((collectible, index) => {
+                if (isColliding(this.x, this.y, collectible)) {
+                    collectibles.splice(index, 1);
+                    score++;
+                    scoreDisplay.textContent = score;
+                }
+            });
         }
         
-        // object canva border
-        player.x = Math.max(player.size, Math.min(player.x, canvas.width - player.size));
-        player.y = Math.max(player.size, Math.min(player.y, canvas.height - player.size));
-    });
-
-    // COLLISION STUFF
-    function checkCollision(obj1, obj2) {
-        const dx = obj1.x - obj2.x;                      // Difference in X positions
-        const dy = obj1.y - obj2.y;                      // Difference in Y positions
-        const distance = Math.hypot(dx, dy);             // Calculate the distance between the centers
-
-        return distance < obj1.size + obj2.size;         // True if objects overlap
+        
     }
 
-    // GAME LOOP
+    function isColliding(x, y, obj) {
+        return (
+            x < obj.x + obj.width &&
+            x + player.width > obj.x &&
+            y < obj.y + obj.height &&
+            y + player.height > obj.y
+        );
+    }
+    
+
+    let player = new Player(50, 50);
+    let obstacles = [];
+    let collectibles = [];
+
     function gameLoop() {
-        // Clear the canvas before redrawing objects
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Move the enemy (autonomous movement)
-        enemy.move();
-
-        // Draw the player and the enemy
+        obstacles.forEach(obj => obj.draw());
+        collectibles.forEach(obj => obj.draw());
         player.draw();
-        enemy.draw();
-
-        // Check for collision between player and enemy
-        if (checkCollision(player, enemy)) {
-            // Toggle the canvas background color on collision
-            bgColor = (bgColor === "#f0f0f0") ? "#ffcccb" : "#f0f0f0";
-
-            // Change the size of both objects on collision
-            player.size = (player.size > 20) ? 20 : 40;
-            enemy.size = (enemy.size > 20) ? 20 : 40;
-        }
-
-        // Apply the new background color to the canvas
-        canvas.style.background = bgColor;
-
-        // Continue the animation loop
         requestAnimationFrame(gameLoop);
     }
 
-    // START THE GAME LOOP
-    gameLoop();
+    function startGame() {
+        // Start the game loop only after obstacles & collectibles are loaded
+        gameLoop();
+    }
+
+    fetch("obstacles.json")
+        .then(response => response.json())
+        .then(data => {
+            obstacles = data.map(obj => new GameObject(obj.x, obj.y, obj.width, obj.height, "#66b5f4"));
+            return fetch("collectibles.json"); // Chain the next fetch
+        })
+        .then(response => response.json())
+        .then(data => {
+            collectibles = data.map(obj => new GameObject(obj.x, obj.y, obj.width, obj.height, "#98f1bc"));
+            startGame(); // Start the game after both JSON files load
+        })
+        .catch(error => console.error("Error loading JSON files:", error));
+
+    window.addEventListener("keydown", (e) => {
+        switch (e.key) {
+            case "ArrowUp": player.move(0, -player.speed); break;
+            case "ArrowDown": player.move(0, player.speed); break;
+            case "ArrowLeft": player.move(-player.speed, 0); break;
+            case "ArrowRight": player.move(player.speed, 0); break;
+        }
+    });
+
+
 });
