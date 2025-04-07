@@ -1,3 +1,0 @@
-Wow this week was rough!!! Spent hours working on it and thank goodness for good friends who know how to code who are willing to help me and for ChatGPT! I got it all done though! The math and connecting of files was so challeneging. Console log also helped a lot to problem solve some lines. I also had to google some code that Chatgpt recommended and it was cool to see and learn. Overall I felt at one point I would never be able to solve this but with lots of help I was able to get it done! 
-
-I think overall it was a great way to learn when to ask for help but also trust myself in knowing I can problem solve, learn something new, and find resources!
