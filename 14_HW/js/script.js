@@ -30,9 +30,11 @@ $(document).ready(function () {
     scene.add(sphere);
 
     // ✅ Load model
-    loader.load('models/model.obj', function (model) {
+    loader.load('models/beemodel.obj', function (model) {
         model.scale.set(0.5, 0.5, 0.5);
-        model.position.y = -1;
+        model.position.y = 3;
+        model.position.x = 0;
+        model.position.z = -3;
 
         model.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
