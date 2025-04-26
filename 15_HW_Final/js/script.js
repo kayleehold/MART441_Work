@@ -1,44 +1,43 @@
 $(document).ready(function () {
-    // ✅ Should not error if OBJLoader is loaded properly
+    // Loaders
     const loader = new THREE.OBJLoader();
+    const textureLoader = new THREE.TextureLoader();
 
     // Setup scene
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    // Set background image (optional: change "background.jpg" to your file)
+    const backgroundTexture = textureLoader.load('images/background.jpg');
+    scene.background = backgroundTexture;
+
+    const camera = new THREE.PerspectiveCamera(
+        75, 
+        window.innerWidth / window.innerHeight, 
+        0.1, 
+        1000
+    );
+
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Lighting
-    const light = new THREE.AmbientLight(0xffffff);
-    scene.add(light);
+        // Ambient light (soft general light)
+    const ambientLight = new THREE.AmbientLight(0x404040, 2); // Soft white light, slightly stronger
+    scene.add(ambientLight);
 
-    // Simple cube
-    const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(),
-        new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-    );
-    cube.position.x = -2;
-    scene.add(cube);
+    // Directional light (like sunlight)
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7.5); // Move the light above and to the side
+    scene.add(directionalLight);
 
-    // Simple sphere
-    const sphere = new THREE.Mesh(
-        new THREE.SphereGeometry(0.75, 32, 32),
-        new THREE.MeshBasicMaterial({ color: 0x0000ff })
-    );
-    sphere.position.x = 2;
-    scene.add(sphere);
-
-    // ✅ Load model
-    loader.load('models/beemodel.obj', function (model) {
-        model.scale.set(0.5, 0.5, 0.5);
-        model.position.y = 3;
-        model.position.x = 0;
-        model.position.z = -3;
+    // Load model
+    loader.load('models/heartkeychain.obj', function (model) {
+        model.scale.set(0.3, 0.3, 0.3);
+        model.position.set(0, 0, 0);
 
         model.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
-                child.material = new THREE.MeshNormalMaterial();
+                child.material = new THREE.MeshPhongMaterial({ color:rgb(204, 33, 62) }); // Default color (red)
             }
         });
 
@@ -47,13 +46,21 @@ $(document).ready(function () {
         // Animate
         function animate() {
             requestAnimationFrame(animate);
-            cube.rotation.y += 0.01;
-            sphere.rotation.y += 0.01;
             model.rotation.y += 0.01;
             renderer.render(scene, camera);
         }
         animate();
     });
 
+    // Controls (optional, if you want to rotate with mouse)
+    const controls = new THREE.TrackballControls(camera, renderer.domElement);
+
     camera.position.z = 5;
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
 });
