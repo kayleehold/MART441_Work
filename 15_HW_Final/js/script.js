@@ -37,7 +37,7 @@ $(document).ready(function () {
 
         model.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
-                child.material = new THREE.MeshPhongMaterial({ color:rgb(204, 33, 62) }); // Default color (red)
+                child.material = new THREE.MeshPhongMaterial({ color: 0xcc0033 }); // Default color (red)
             }
         });
 

@@ -1,0 +1,4 @@
+I wanted to create an interesting 3D Model with a simple background to go along with some other artworks I've done this semester in my art classes!
+I had chatGPT help me organize the code but I used code and knowledge from this last semester. I know it is not super complex code but I worked hard on my 3D model spikey heart key chain (my art this semester has included a lot of spikes as a representation of isolation from mood swings. I've been dealing with a hormone imbalance from needing to take birth control for my PCOS) so I thought it was fitting to include this art into my final project!
+
+Thanks so much for this semester and being such a great teacher the last few years! This is my last class with you since I graduate this semester so thnak you for all you've taught me!
